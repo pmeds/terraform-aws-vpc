@@ -66,3 +66,9 @@ resource "aws_route_table" "second_rt" {
     Name = "2nd Route Table"
   }
 }
+
+resource "aws_route_table_association" "public" {
+  count          = length(aws_subnet.public_subnets)
+  subnet_id      = aws_subnet.public_subnets[count.index].id
+  route_table_id = aws_route_table.second_rt.id
+}
